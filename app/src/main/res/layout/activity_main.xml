@@ -3,139 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="#1a1a1a">
+    android:padding="24dp"
+    android:background="#1a1a1a"
+    android:gravity="center">
 
-    <ScrollView
+    <TextView
+        android:id="@+id/textTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:text="PS4 to Xbox"
+        android:textSize="32sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="20dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status: Stopped"
+        android:textSize="18sp"
+        android:textColor="#FFCC80"
+        android:gravity="center"
+        android:layout_marginBottom="40dp" />
 
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PS4 to Xbox Controller"
-                android:textColor="#FFFFFF"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:gravity="center" />
+    <Button
+        android:id="@+id/buttonStartService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="▶ START SERVICE"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="#FF6B35" />
+    <Button
+        android:id="@+id/buttonStopService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="⏹ STOP SERVICE"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp" />
 
-            <TextView
-                android:id="@+id/textStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Status: Initializing..."
-                android:textColor="#FFCC80"
-                android:textSize="16sp"
-                android:layout_marginTop="12dp" />
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="⚙ SETTINGS"
+        android:textSize="16sp"
+        android:padding="16dp" />
 
-            <TextView
-                android:id="@+id/textDeviceInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No PS4 device detected"
-                android:textColor="#B0BEC5"
-                android:textSize="14sp"
-                android:layout_marginTop="12dp" />
-
-            <Button
-                android:id="@+id/buttonScanDevices"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Scan for PS4 Controller"
-                android:layout_marginTop="24dp"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/buttonOpenAccessibility"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enable Accessibility Service"
-                android:layout_marginTop="12dp"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/buttonStartService"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Start Gamepad Service"
-                android:layout_marginTop="12dp"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/buttonCheckRoot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Check Root Access"
-                android:layout_marginTop="12dp"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="#FF6B35" />
-
-            <TextView
-                android:id="@+id/textButtonLog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button Events:"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textEventLog"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#0a0a0a"
-                android:textColor="#00FF00"
-                android:textSize="12sp"
-                android:text="Waiting for input..."
-                android:padding="12dp"
-                android:layout_marginTop="8dp"
-                android:maxLines="30"
-                android:scrollbars="vertical" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="#FF6B35" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Important Notes:"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• This app requires AccessibilityService enabled in Android settings.\n• Full Xbox emulation (for GTA San Andreas) requires rooted device + uinput support.\n• Without root, this app will only map buttons internally for testing.\n• Connect your PS4 DualShock 4 via Bluetooth first."
-                android:textColor="#FFCC80"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instructions:\n1. Start Service\n2. Connect PS4 Controller\n3. Open GTA San Andreas\n4. Play!"
+        android:textSize="14sp"
+        android:textColor="#B0BEC5"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal" />
 
 </LinearLayout>

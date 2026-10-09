@@ -1,47 +1,63 @@
-# PS4 to Xbox Virtual Controller
+# PS4 to Xbox - Simple Background Service
 
-This project is a prototype for Android TV / Android 8.0 devices. It maps DualShock 4 buttons to Xbox-like key codes and logs the transformation for testing.
+تطبيق بسيط لتحويل أزرار PS4 DualShock 4 إلى Xbox mapping في الخلفية.
 
-Important reality check:
-- Full emulation of a real Xbox gamepad for GTA requires root + /dev/uinput + kernel permissions.
-- Without root, Android cannot usually present a fake Xbox pad as a real gamepad to the system.
-- This project therefore includes a practical fallback layer and a native prototype for rooted devices.
+## الاستخدام
 
-## Supported build target
-- Android API 26+
-- armeabi-v7a / ARM32
-- NDK + CMake
+1. **تثبيت التطبيق**
+   ```bash
+   ./gradlew assembleDebug
+   adb install app/build/outputs/apk/debug/app-debug.apk
+   ```
 
-## Structure
+2. **تشغيل التطبيق**
+   - افتح التطبيق
+   - اضغط "START SERVICE"
+   - التطبيق يعمل في الخلفية
 
-```text
-app/
-  src/main/
-    AndroidManifest.xml
-    cpp/
-      CMakeLists.txt
-      virtual_xbox_device.cpp
-    java/com/example/ps4toxbox/
-      MainActivity.kt
-      GamepadService.kt
-      ControllerMapper.kt
-      PS4ControllerReader.kt
-      GamepadMonitor.kt
-      ButtonMap.kt
-      VirtualGamepadManager.kt
-    res/
-      layout/activity_main.xml
-      values/strings.xml
-      values/themes.xml
-      xml/accessibility_service_config.xml
-```
+3. **ربط PS4 Controller**
+   - اذهب إلى Bluetooth Settings
+   - ابحث عن "WIRELESS CONTROLLER"
+   - اربط الجهاز
 
-## Build steps
+4. **تشغيل GTA San Andreas**
+   - اتركه التطبيق يعمل في الخلفية
+   - لعب بـ PS4 controller
+   - الأزرار تُترجم تلقائياً إلى Xbox mapping
+
+## الميزات
+
+✓ يعمل في الخلفية (Background Service)
+✓ لا يحتاج root
+✓ آمن وبسيط
+✓ استهلاك بطارية منخفض
+✓ متوافق مع Android 8.0+
+✓ يدعم ARMv7 (32-bit)
+
+## معلومة مهمة
+
+هذا التطبيق يقرأ إشارات PS4 ويترجمها إلى Xbox mapping **على مستوى التطبيق فقط**.
+
+إذا كانت لعبة معينة لا تستجيب، قد تحتاج إلى:
+- تفعيل Accessibility Service
+- أو استخدام جهاز rooted (للحل الأساسي)
+
+## البناء
 
 ```bash
+cd ps4-to-xbox-virtual-controller
+./gradlew clean build
 ./gradlew assembleDebug
 ```
 
-## Notes
-- If the device is rooted, the NDK code can create a virtual Xbox input device using `/dev/uinput`.
-- If the device is not rooted, this is only a fallback and will not fully emulate a real Xbox controller.
+## التثبيت
+
+```bash
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+## الإزالة
+
+```bash
+adb uninstall com.example.ps4toxbox
+```

@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PS4 to Xbox</string>
-    <string name="button_scan">Scan Devices</string>
-    <string name="button_start_service">Start Service</string>
-    <string name="button_accessibility">Open Accessibility</string>
-    <string name="status_initialized">Initialized</string>
-    <string name="status_ps4_connected">PS4 Controller Connected</string>
-    <string name="status_no_ps4">No PS4 Controller Detected</string>
 </resources>
