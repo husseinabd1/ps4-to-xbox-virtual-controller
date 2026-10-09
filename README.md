@@ -1,28 +1,33 @@
-# PS4 to Xbox (No-root fallback)
+# PS4 to Xbox Virtual Controller
 
-This project is a practical Android template for experimenting with PS4-to-Xbox mapping on Android TV / Android devices.
+This project is a prototype for Android TV / Android 8.0 devices. It maps DualShock 4 buttons to Xbox-like key codes and logs the transformation for testing.
 
-Important:
-- This version does not create a true Xbox gamepad device without root + uinput.
-- Full emulation of a real Xbox controller requires rooted device access and kernel-level input injection.
-- This app is useful as a mapping prototype and as a foundation for a rooted implementation.
+Important reality check:
+- Full emulation of a real Xbox gamepad for GTA requires root + /dev/uinput + kernel permissions.
+- Without root, Android cannot usually present a fake Xbox pad as a real gamepad to the system.
+- This project therefore includes a practical fallback layer and a native prototype for rooted devices.
 
-## What this project includes
-- Android app UI
-- AccessibilityService hook for a fallback mechanism
-- PS4 button mapping to Xbox-like key codes
-- Logging for testing and debugging
+## Supported build target
+- Android API 26+
+- armeabi-v7a / ARM32
+- NDK + CMake
 
-## Project structure
+## Structure
 
 ```text
 app/
   src/main/
     AndroidManifest.xml
+    cpp/
+      CMakeLists.txt
+      virtual_xbox_device.cpp
     java/com/example/ps4toxbox/
       MainActivity.kt
       GamepadService.kt
       ControllerMapper.kt
+      PS4ControllerReader.kt
+      GamepadMonitor.kt
+      ButtonMap.kt
       VirtualGamepadManager.kt
     res/
       layout/activity_main.xml
@@ -31,21 +36,12 @@ app/
       xml/accessibility_service_config.xml
 ```
 
-## Build
+## Build steps
 
 ```bash
 ./gradlew assembleDebug
 ```
 
-## How to test
-1. Enable the Accessibility Service in Android Settings.
-2. Open the app.
-3. Tap "Open Accessibility Settings".
-4. Enable the service.
-5. Connect a DualShock 4 controller.
-6. Check logs in Logcat.
-
-## Real solution
-To fully emulate an Xbox controller for GTA San Andreas / Android TV, a rooted environment and native `uinput` injection is required.
-
-Without that, Android will not accept a fake Xbox controller as a real gamepad in most cases.
+## Notes
+- If the device is rooted, the NDK code can create a virtual Xbox input device using `/dev/uinput`.
+- If the device is not rooted, this is only a fallback and will not fully emulate a real Xbox controller.

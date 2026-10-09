@@ -1,7 +1,6 @@
 package com.example.ps4toxbox
 
 import android.accessibilityservice.AccessibilityService
-import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
 import android.util.Log
 import android.view.KeyEvent
@@ -17,20 +16,19 @@ class GamepadService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        // This service is used as a fallback only. It cannot fully emulate a real Xbox peripheral
-        // without root + uinput. We log key events here for diagnostics and testing.
+        // Fallback only. Real Xbox emulation requires root + uinput.
     }
 
     override fun onInterrupt() {
-        Log.d("GamepadService", "Accessibility service interrupted")
+        Log.d("GamepadService", "Interrupted")
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        val mappedCode = mapper.mapPs4Button(event.keyCode)
-        if (mappedCode != null) {
+        val mapped = mapper.mapPs4Button(event.keyCode)
+        if (mapped != null) {
             Log.d(
                 "GamepadService",
-                "PS4 key ${event.keyCode} mapped to Xbox key $mappedCode, action=${event.action}"
+                "Mapped PS4 key ${event.keyCode} -> Xbox key $mapped action=${event.action}"
             )
             return true
         }

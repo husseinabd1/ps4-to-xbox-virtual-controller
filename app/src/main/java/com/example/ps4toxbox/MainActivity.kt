@@ -10,6 +10,7 @@ import com.example.ps4toxbox.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var ps4Reader: PS4ControllerReader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,19 +22,49 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonStartService.setOnClickListener {
-            startGamepadService()
+            if (startGamepadService()) {
+                binding.textStatus.text = "Service status: started"
+            } else {
+                binding.textStatus.text = "Service status: failed"
+            }
+        }
+
+        ps4Reader = PS4ControllerReader(
+            context = this,
+            onButtonPressed = { mappedCode, action ->
+                Log.d("MainActivity", "Mapped Xbox button: $mappedCode action=$action")
+                VirtualGamepadManager.sendMappedButton(mappedCode, action)
+            },
+            onAxisChanged = { axis, value ->
+                Log.d("MainActivity", "Axis $axis = $value")
+            }
+        )
+
+        val found = ps4Reader.findPS4Controller()
+        binding.textStatus.text = if (found) {
+            "PS4 controller detected"
+        } else {
+            "No PS4 controller detected"
         }
     }
 
-    private fun startGamepadService() {
-        try {
+    private fun startGamepadService(): Boolean {
+        return try {
             val intent = Intent(this, GamepadService::class.java)
             startService(intent)
-            binding.textStatus.text = "Service status: started"
             Log.d("MainActivity", "GamepadService started")
+            true
         } catch (e: Exception) {
-            binding.textStatus.text = "Service status: failed to start"
-            Log.e("MainActivity", "Failed to start service", e)
+            Log.e("MainActivity", "Failed to start GamepadService", e)
+            false
         }
     }
+
+    companion object {
+        init {
+            System.loadLibrary("virtual_xbox")
+        }
+    }
+
+    external fun createNativeVirtualXbox(): Boolean
 }
