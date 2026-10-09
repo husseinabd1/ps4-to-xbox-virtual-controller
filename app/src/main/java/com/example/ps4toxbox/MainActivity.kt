@@ -2,7 +2,6 @@ package com.example.ps4toxbox
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -10,44 +9,47 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-
     private val TAG = "MainActivity"
     private var serviceRunning = false
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val textStatus = findViewById<TextView>(R.id.textStatus)
-        val btnStartService = findViewById<Button>(R.id.buttonStartService)
-        val btnStopService = findViewById<Button>(R.id.buttonStopService)
-        val btnSettings = findViewById<Button>(R.id.buttonSettings)
-
-        btnStartService.setOnClickListener {
+        
+        val statusText = findViewById<TextView>(R.id.textStatus)
+        val startBtn = findViewById<Button>(R.id.buttonStart)
+        val stopBtn = findViewById<Button>(R.id.buttonStop)
+        val scanBtn = findViewById<Button>(R.id.buttonScan)
+        
+        startBtn.setOnClickListener {
             if (!serviceRunning) {
-                val intent = Intent(this, GamepadMapperService::class.java)
-                startService(intent)
+                startService(Intent(this, PS4Service::class.java))
                 serviceRunning = true
-                textStatus.text = "Status: Service Running"
-                Toast.makeText(this, "Service started - connect PS4 and play!", Toast.LENGTH_SHORT)
-                    .show()
+                statusText.text = "✓ Service Running - PS4 buttons are mapped to Xbox"
+                Toast.makeText(this, "Service started!", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "Service started")
             }
         }
-
-        btnStopService.setOnClickListener {
+        
+        stopBtn.setOnClickListener {
             if (serviceRunning) {
-                val intent = Intent(this, GamepadMapperService::class.java)
-                stopService(intent)
+                stopService(Intent(this, PS4Service::class.java))
                 serviceRunning = false
-                textStatus.text = "Status: Service Stopped"
+                statusText.text = "✗ Service Stopped"
                 Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "Service stopped")
             }
         }
-
-        btnSettings.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_SETTINGS))
+        
+        scanBtn.setOnClickListener {
+            val ps4 = PS4Reader(this).scanForPS4()
+            if (ps4 != null) {
+                statusText.text = "✓ PS4 Found: ${ps4.name}"
+                Toast.makeText(this, "PS4 Controller Detected!", Toast.LENGTH_SHORT).show()
+            } else {
+                statusText.text = "✗ No PS4 Controller Found"
+                Toast.makeText(this, "Please connect PS4 controller", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
