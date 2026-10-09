@@ -1,4 +1,5 @@
 -keep class com.example.ps4toxbox.** { *; }
--keepclassmembers class * {
+-keepclasseswithmembernames class * {
     native <methods>;
 }
+-dontwarn com.example.ps4toxbox.**
