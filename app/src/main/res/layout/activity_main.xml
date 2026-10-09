@@ -4,59 +4,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center"
-    android:background="#1a1a1a">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PS4 to Xbox"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:layout_marginBottom="30dp" />
+    android:background="#111111">
 
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Status: Stopped"
-        android:textSize="16sp"
-        android:textColor="#FFCC80"
+        android:text="Status: Idle"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
         android:gravity="center"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/buttonScan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan for PS4"
-        android:layout_marginBottom="12dp"
-        android:padding="16dp" />
+        android:text="Scan PS4"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Service"
-        android:layout_marginBottom="12dp"
-        android:padding="16dp" />
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/buttonStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Stop Service"
-        android:padding="16dp" />
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="\nHow to use:\n1. Connect PS4 controller\n2. Click 'Scan for PS4'\n3. Click 'Start Service'\n4. Open GTA and play!"
-        android:textSize="14sp"
-        android:textColor="#B0BEC5"
-        android:layout_marginTop="30dp"
-        android:gravity="center" />
+        android:text="Logs:"
+        android:textColor="#FFCC80"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textLog"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#1a1a1a"
+        android:textColor="#00FF00"
+        android:textSize="12sp"
+        android:padding="12dp"
+        android:scrollbars="vertical"
+        android:text="Waiting for input..." />
 
 </LinearLayout>

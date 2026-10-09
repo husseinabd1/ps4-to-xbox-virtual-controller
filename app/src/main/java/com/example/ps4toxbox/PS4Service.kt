@@ -4,27 +4,38 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import android.view.InputDevice
 import android.view.KeyEvent
-import android.view.MotionEvent
 
 class PS4Service : Service() {
-    private val TAG = "PS4Service"
-    
+    private val tag = "PS4Service"
+    private val reader = PS4InputReader(this)
+    private val logger = EventLogger()
+
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Service created")
+        Log.d(tag, "Service created")
     }
-    
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "Service started - mapping buttons from PS4 to Xbox")
+        val found = reader.scanForPS4()
+        if (found != null) {
+            logger.log("Device detected: ${found.name}")
+            Log.d(tag, "PS4 connected: ${found.name}")
+        } else {
+            logger.log("No PS4 device found")
+        }
         return START_STICKY
     }
-    
+
     override fun onBind(intent: Intent?): IBinder? = null
-    
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "Service destroyed")
+
+    fun logKeyEvent(event: KeyEvent): String? {
+        val result = reader.handleKeyEvent(event)
+        if (result != null) {
+            logger.log(result)
+        }
+        return result
     }
+
+    fun getLogs(): String = logger.getText()
 }
